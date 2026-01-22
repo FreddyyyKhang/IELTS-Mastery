@@ -220,29 +220,20 @@ const App: React.FC = () => {
             </div>
 
             <aside className="space-y-6">
-              <div className="bg-white p-6 rounded-2xl shadow-lg border border-[#C5A059]/20">
-                <h3 className="text-xs uppercase tracking-widest text-[#C5A059] font-bold mb-4">Scholar Portfolio</h3>
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-500">Gold Reserves</span>
-                    <span className="font-bold text-slate-800">🪙 {stats.gold}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-500">Mastered</span>
-                    <span className="font-bold text-emerald-600">{stats.masteredCount}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-500">Learning</span>
-                    <span className="font-bold text-orange-600">{activeWords ? activeWords.length : 0}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-[#FAF8F4] p-6 rounded-2xl border-2 border-dashed border-[#C5A059]/40">
-                <h3 className="serif text-xl mb-2 text-slate-800">Academic Counsel</h3>
+              <div className="bg-[#FAF8F4] p-6 rounded-2xl border-2 border-dashed border-[#C5A059]/40 shadow-sm">
+                <h3 className="serif text-xl mb-4 text-slate-800 flex items-center gap-2">
+                   <span className="text-[#C5A059]">⚖️</span> Academic Counsel
+                </h3>
                 <p className="text-sm text-slate-600 leading-relaxed italic">
-                  "Precision in translation and contextual use are the hallmarks of a Band 8.0 scholar."
+                  "Precision in translation and contextual use are the hallmarks of a Band 8.0 scholar. Use the Vault to curate high-impact terminology."
                 </p>
+                <div className="mt-6 pt-6 border-t border-[#C5A059]/10">
+                   <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C5A059]">Active Session Stats</p>
+                   <div className="flex justify-between mt-2">
+                      <span className="text-xs text-slate-400">Total Terms</span>
+                      <span className="text-xs font-bold text-slate-700">{activeWords ? activeWords.length : 0}</span>
+                   </div>
+                </div>
               </div>
             </aside>
           </div>
