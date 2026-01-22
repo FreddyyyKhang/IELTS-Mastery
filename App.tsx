@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { STUDY_SET } from './data/studySet';
 import { StudyMode, UserStats, IELTSWord, WordSet } from './types';
@@ -10,31 +9,41 @@ const App: React.FC = () => {
   const [mode, setMode] = useState<StudyMode>('DASHBOARD');
   const [activeWords, setActiveWords] = useState<IELTSWord[] | null>(null);
   const [savedSets, setSavedSets] = useState<WordSet[]>([]);
+
+  // SAFE INITIALIZATION: This prevents the blank screen if localStorage is corrupted
   const [stats, setStats] = useState<UserStats>(() => {
-    const saved = localStorage.getItem('ielts_stats');
-    return saved ? JSON.parse(saved) : {
-      gold: 500,
-      masteredCount: 0,
-      learningCount: 0,
-      lastScore: null
-    };
+    try {
+      const saved = localStorage.getItem('ielts_stats');
+      return saved ? JSON.parse(saved) : {
+        gold: 500,
+        masteredCount: 0,
+        learningCount: 0,
+        lastScore: null
+      };
+    } catch (error) {
+      console.error("Failed to parse local stats:", error);
+      return { gold: 500, masteredCount: 0, learningCount: 0, lastScore: null };
+    }
   });
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // Load saved sets from localStorage on mount
   useEffect(() => {
-    const saved = localStorage.getItem('ielts_vault');
-    if (saved) {
-      setSavedSets(JSON.parse(saved));
-    }
-    
-    // Auto-load last active words if they exist
-    const lastActive = localStorage.getItem('ielts_active_words');
-    if (lastActive) {
-      const words = JSON.parse(lastActive);
-      setActiveWords(words);
-      setStats(prev => ({ ...prev, learningCount: words.length }));
+    try {
+      const saved = localStorage.getItem('ielts_vault');
+      if (saved) {
+        setSavedSets(JSON.parse(saved));
+      }
+      
+      const lastActive = localStorage.getItem('ielts_active_words');
+      if (lastActive) {
+        const words = JSON.parse(lastActive);
+        setActiveWords(words);
+        setStats(prev => ({ ...prev, learningCount: words.length }));
+      }
+    } catch (error) {
+      console.error("Failed to load vault or active words:", error);
     }
   }, []);
 
